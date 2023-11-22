@@ -43,11 +43,7 @@ public class GUI implements ActionListener {
     }
 
     void switchTurn() {
-        if (currentPlayer == 'X') {
-            currentPlayer = 'O';
-        } else {
-            currentPlayer = 'X';
-        }
+        currentPlayer = (currentPlayer == 'X') ? '0' : 'X';
     }
 
     void winConCheck() {
