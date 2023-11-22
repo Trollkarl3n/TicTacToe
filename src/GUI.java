@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 public class GUI implements ActionListener {
     JFrame frame;
     JPanel panel;
+    JLabel turnLabel;
     JButton[] buttons;
     char currentPlayer;
     int btnCounter = 0;
@@ -35,10 +36,16 @@ public class GUI implements ActionListener {
 
         buttons = new JButton[9];
         currentPlayer = 'X';
+
+        turnLabel = new JLabel("Player: " + currentPlayer + " turn");
+        frame.add(turnLabel, BorderLayout.SOUTH);
+
         layoutButtons();
 
         frame.setVisible(true);
     }
+
+
 
     void layoutButtons() {
         panel = new JPanel();
@@ -58,6 +65,7 @@ public class GUI implements ActionListener {
 
     void switchTurn() {
         currentPlayer = (currentPlayer == 'X') ? '0' : 'X';
+        turnLabel.setText("Player: " + currentPlayer + " turn");
     }
 
     void winConCheck() {
