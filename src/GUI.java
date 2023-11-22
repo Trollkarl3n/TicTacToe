@@ -10,6 +10,7 @@ public class GUI implements ActionListener {
     char currentPlayer;
     int btnCounter = 0;
 
+
     GUI() {
         frame = new JFrame();
         frame.setTitle("TicTacToe");
@@ -29,6 +30,7 @@ public class GUI implements ActionListener {
         panel = new JPanel();
         panel.setLayout(new GridLayout(3, 3));
         frame.add(panel, BorderLayout.CENTER);
+
         for (int i = 0; i < 9; i++) {
             buttons[i] = new JButton("");
             buttons[i].addActionListener(this);
@@ -41,7 +43,11 @@ public class GUI implements ActionListener {
     }
 
     void switchTurn() {
-        currentPlayer == 'X') ? '0' : 'X';
+        if (currentPlayer == 'X') {
+            currentPlayer = 'O';
+        } else {
+            currentPlayer = 'X';
+        }
     }
 
     void winConCheck() {
@@ -74,6 +80,7 @@ public class GUI implements ActionListener {
         currentPlayer = 'X';
         btnCounter = 0;
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
