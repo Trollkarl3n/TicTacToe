@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 public class GUI implements ActionListener {
     JFrame frame;
@@ -64,7 +65,7 @@ public class GUI implements ActionListener {
     }
 
     void switchTurn() {
-        currentPlayer = (currentPlayer == 'X') ? '0' : 'X';
+        currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
         turnLabel.setText("Player: " + currentPlayer + " turn");
     }
 
@@ -95,7 +96,12 @@ public class GUI implements ActionListener {
         for (JButton button : buttons) {
             button.setText("");
         }
-        currentPlayer = 'X';
+
+        Random random = new Random();
+        if (random.nextBoolean()) {
+            currentPlayer = 'X' ;
+        } else currentPlayer = 'O';
+
         btnCounter = 0;
     }
 
