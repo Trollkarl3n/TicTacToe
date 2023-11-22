@@ -11,6 +11,7 @@ public class GUI implements ActionListener {
     JButton[] buttons;
     char currentPlayer;
     int btnCounter = 0;
+    boolean vsAI = false;
 
 
     GUI() {
@@ -89,7 +90,22 @@ public class GUI implements ActionListener {
             rstGame();
         } else {
             switchTurn();
+
+            if (vsAI && currentPlayer == 'O') {
+                makeAIMove();
+            }
         }
+    }
+
+    void makeAIMove() {
+        Random rand = new Random();
+        int aiMove;
+        do {
+            aiMove = rand.nextInt(9);
+        } while (!buttons[aiMove].getText().isEmpty());
+
+        buttons[aiMove].setText("O");
+        winConCheck();
     }
 
     void rstGame() {
@@ -114,10 +130,19 @@ public class GUI implements ActionListener {
             JMenuItem menuItem = (JMenuItem) source;
 
             if (menuItem.getText().equals("Play vs Friend")) {
+                vsAI = false;
                 JOptionPane.showMessageDialog(frame, "You selected to play vs friend");
+                rstGame();
             } else if (menuItem.getText().equals("Play vs AI")) {
+                vsAI = true;
                 JOptionPane.showMessageDialog(frame, "You selected to play vs AI");
+                rstGame();
+
+                if (currentPlayer == 'O') {
+                    makeAIMove();
+                }
             }
+
         } else if (source instanceof JButton) {
             JButton clickedButton = (JButton) source;
 
