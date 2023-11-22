@@ -20,7 +20,7 @@ public class GUI implements ActionListener {
         frame.setLocationRelativeTo(null);
 
         JMenuBar menuBar = new JMenuBar();
-        JMenu gameMenu = new JMenu("Game");
+        JMenu gameMenu = new JMenu("Game meny");
         JMenuItem vsFriendItem = new JMenuItem("Play vs Friend");
         JMenuItem vsAIItem = new JMenuItem("Play vs AI");
 
