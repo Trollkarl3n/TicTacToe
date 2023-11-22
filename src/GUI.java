@@ -19,6 +19,20 @@ public class GUI implements ActionListener {
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
 
+        JMenuBar menuBar = new JMenuBar();
+        JMenu gameMenu = new JMenu("Game");
+        JMenuItem vsFriendItem = new JMenuItem("Play vs Friend");
+        JMenuItem vsAIItem = new JMenuItem("Play vs AI");
+
+        vsFriendItem.addActionListener(this);
+        vsAIItem.addActionListener(this);
+
+        gameMenu.add(vsFriendItem);
+        gameMenu.add(vsAIItem);
+
+        menuBar.add(gameMenu);
+        frame.setJMenuBar(menuBar);
+
         buttons = new JButton[9];
         currentPlayer = 'X';
         layoutButtons();
@@ -80,11 +94,23 @@ public class GUI implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JButton clickedButton = (JButton) e.getSource();
+        Object source = e.getSource();
 
-        if (clickedButton.getText().isEmpty()) {
-            clickedButton.setText(String.valueOf(currentPlayer));
-            winConCheck();
+        if(source instanceof JMenuItem) {
+            JMenuItem menuItem = (JMenuItem) source;
+
+            if (menuItem.getText().equals("Play vs Friend")) {
+                JOptionPane.showMessageDialog(frame, "You selected to play vs friend");
+            } else if (menuItem.getText().equals("Play vs AI")) {
+                JOptionPane.showMessageDialog(frame, "You selected to play vs AI");
+            }
+        } else if (source instanceof JButton) {
+            JButton clickedButton = (JButton) source;
+
+            if (clickedButton.getText().isEmpty()) {
+                clickedButton.setText(String.valueOf(currentPlayer));
+                winConCheck();
+            }
         }
     }
 }
