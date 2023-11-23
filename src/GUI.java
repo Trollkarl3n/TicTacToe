@@ -117,6 +117,7 @@ public class GUI implements ActionListener {
         if (random.nextBoolean()) {
             currentPlayer = 'X' ;
         } else currentPlayer = 'O';
+        turnLabel.setText("Player: " + currentPlayer + " turn");
 
         btnCounter = 0;
     }
