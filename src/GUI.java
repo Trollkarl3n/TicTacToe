@@ -11,10 +11,11 @@ public class GUI implements ActionListener {
     JButton[] buttons;
     char currentPlayer;
     int btnCounter = 0;
-    boolean vsAI = false;
+    boolean vsAI = false;    // Flagga för att avgöra om spelet är mot en AI eller en vän
 
 
     GUI() {
+        // Initialisera huvudfönstret
         frame = new JFrame();
         frame.setTitle("TicTacToe");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -22,14 +23,17 @@ public class GUI implements ActionListener {
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
 
+        // Skapa en menyfält och menyalternativ
         JMenuBar menuBar = new JMenuBar();
         JMenu gameMenu = new JMenu("Game meny");
         JMenuItem vsFriendItem = new JMenuItem("Play vs Friend");
         JMenuItem vsAIItem = new JMenuItem("Play vs AI");
 
+        // Lägg till händelselyssnare för menyalternativen
         vsFriendItem.addActionListener(this);
         vsAIItem.addActionListener(this);
 
+        // Lägg till menyalternativen i menyn
         gameMenu.add(vsFriendItem);
         gameMenu.add(vsAIItem);
 
@@ -39,6 +43,7 @@ public class GUI implements ActionListener {
         buttons = new JButton[9];
         currentPlayer = 'X';
 
+        // Skapa etiketten för turmeddelandet
         turnLabel = new JLabel("Player: " + currentPlayer + " turn");
         frame.add(turnLabel, BorderLayout.SOUTH);
 
@@ -49,11 +54,14 @@ public class GUI implements ActionListener {
 
 
 
+    // Metod för att sätta upp layouten för knapparna
     void layoutButtons() {
+        // Skapa en panel med ett 3x3 rutnätslayout
         panel = new JPanel();
         panel.setLayout(new GridLayout(3, 3));
         frame.add(panel, BorderLayout.CENTER);
 
+        // Initialisera knappar, sätt egenskaper och lägg till dem i panelen
         for (int i = 0; i < 9; i++) {
             buttons[i] = new JButton("");
             buttons[i].addActionListener(this);
@@ -65,14 +73,17 @@ public class GUI implements ActionListener {
         }
     }
 
+    // Metod för att byta tur mellan 'X' och 'O'
     void switchTurn() {
         currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
         turnLabel.setText("Player: " + currentPlayer + " turn");
     }
 
+    // Metod för att kontrollera om det finns en vinst eller oavgjort
     void winConCheck() {
         int[][] winCon = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
 
+        // Kontrollera om det finns en vinnande kombination
         for (int[] winner : winCon) {
             if (buttons[winner[0]].getText().equals(String.valueOf(currentPlayer))
                     && buttons[winner[1]].getText().equals(String.valueOf(currentPlayer))
@@ -83,20 +94,23 @@ public class GUI implements ActionListener {
             }
         }
 
+        // Öka antalet knapptryckningar
         btnCounter++;
 
+        // Kontrollera om det är oavgjort
         if (btnCounter == 9) {
             JOptionPane.showMessageDialog(frame, "Draw no one wins!!!");
             rstGame();
         } else {
             switchTurn();
-
+            // Om spelet är mot AI, gör AI:s drag
             if (vsAI && currentPlayer == 'O') {
                 makeAIMove();
             }
         }
     }
 
+    // Metod för att låta AI göra ett slumpmässigt drag
     void makeAIMove() {
         Random rand = new Random();
         int aiMove;
@@ -108,21 +122,25 @@ public class GUI implements ActionListener {
         winConCheck();
     }
 
+    // Metod för att återställa spelet
     void rstGame() {
         for (JButton button : buttons) {
             button.setText("");
         }
 
+        // Slumpmässigt bestäm startspelaren för nästa omgång
         Random random = new Random();
         if (random.nextBoolean()) {
             currentPlayer = 'X' ;
         } else currentPlayer = 'O';
         turnLabel.setText("Player: " + currentPlayer + " turn");
 
+        // Återställ antalet knapptryckningar
         btnCounter = 0;
     }
 
 
+    // Händelselyssnare för knapptryckningar och menyalternativ
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
@@ -130,6 +148,7 @@ public class GUI implements ActionListener {
         if(source instanceof JMenuItem) {
             JMenuItem menuItem = (JMenuItem) source;
 
+            // Hantera åtgärder för menyalternativ
             if (menuItem.getText().equals("Play vs Friend")) {
                 vsAI = false;
                 JOptionPane.showMessageDialog(frame, "You selected to play vs friend");
@@ -144,6 +163,7 @@ public class GUI implements ActionListener {
                 }
             }
 
+        // Om Ai börjar
         } else if (source instanceof JButton) {
             JButton clickedButton = (JButton) source;
 
