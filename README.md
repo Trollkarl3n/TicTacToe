@@ -1,4 +1,7 @@
 # TicTacToe
 Mini projekt Tic Tac Toe
 
-A TicTacToe game with the option of player vs player, you can also try your chances vs the AI if you dare
+FEATURES
+
+1. Option of player vs player
+2. You can also try your chances vs the AI if you dare
