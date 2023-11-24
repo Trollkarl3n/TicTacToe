@@ -29,7 +29,7 @@ public class GUI implements ActionListener {
         JMenuItem vsFriendItem = new JMenuItem("Play vs Friend");
         JMenuItem vsAIItem = new JMenuItem("Play vs AI");
 
-        // Lägg till händelselyssnare för menyalternativen
+        // Lägg till ActionListener för menyalternativen
         vsFriendItem.addActionListener(this);
         vsAIItem.addActionListener(this);
 
@@ -43,7 +43,7 @@ public class GUI implements ActionListener {
         buttons = new JButton[9];
         currentPlayer = 'X';
 
-        // Skapa etiketten för turmeddelandet
+        // Skapa JLabel för Vems tur det är
         turnLabel = new JLabel("Player: " + currentPlayer + " turn");
         frame.add(turnLabel, BorderLayout.SOUTH);
 
@@ -61,7 +61,8 @@ public class GUI implements ActionListener {
         panel.setLayout(new GridLayout(3, 3));
         frame.add(panel, BorderLayout.CENTER);
 
-        // Initialisera knappar, sätt egenskaper och lägg till dem i panelen
+       /*  Initialisera knappar, sätt egenskaper och lägg till dem i panelen,
+         för var iteration sätts en JButton ut tills vi har 9 i ett grid 3X3*/
         for (int i = 0; i < 9; i++) {
             buttons[i] = new JButton("");
             buttons[i].addActionListener(this);
@@ -73,13 +74,13 @@ public class GUI implements ActionListener {
         }
     }
 
-    // Metod för att byta tur mellan 'X' och 'O'
+    // Metod som kollar vems tur det är och isåfall bytar till nästa spelare mellan 'X' och 'O'
     void switchTurn() {
         currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
         turnLabel.setText("Player: " + currentPlayer + " turn");
     }
 
-    // Metod för att kontrollera om det finns en vinst eller oavgjort
+    // Metod för att kontrollera om det blev vinst eller oavgjort
     void winConCheck() {
         int[][] winCon = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
 
@@ -119,10 +120,11 @@ public class GUI implements ActionListener {
         } while (!buttons[aiMove].getText().isEmpty());
 
         buttons[aiMove].setText("O");
+
         winConCheck();
     }
 
-    // Metod för att återställa spelet
+    // Metod för att starta om spelet
     void rstGame() {
         for (JButton button : buttons) {
             button.setText("");
@@ -140,13 +142,12 @@ public class GUI implements ActionListener {
     }
 
 
-    // Händelselyssnare för knapptryckningar och menyalternativ
+    // Actionlistener för knapptryckningar och menyalternativ
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
-        if(source instanceof JMenuItem) {
-            JMenuItem menuItem = (JMenuItem) source;
+        if(source instanceof JMenuItem menuItem) {
 
             // Hantera åtgärder för menyalternativ
             if (menuItem.getText().equals("Play vs Friend")) {
@@ -164,8 +165,7 @@ public class GUI implements ActionListener {
             }
 
         // Om Ai börjar
-        } else if (source instanceof JButton) {
-            JButton clickedButton = (JButton) source;
+        } else if (source instanceof JButton clickedButton) {
 
             if (clickedButton.getText().isEmpty()) {
                 clickedButton.setText(String.valueOf(currentPlayer));
